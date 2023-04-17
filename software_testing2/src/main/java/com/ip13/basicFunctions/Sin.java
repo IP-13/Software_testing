@@ -1,9 +1,15 @@
-package com.ip13.basicFucntions;
+package com.ip13.basicFunctions;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+
+import java.io.IOException;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
 public class Sin {
+
     public double sin(double x, double error) {
         BigDecimal actual = new BigDecimal(x).remainder(new BigDecimal(2 * Math.PI));
 
@@ -11,11 +17,9 @@ public class Sin {
 
         BigDecimal last_term = actual;
 
-        BigDecimal epsilon = BigDecimal.valueOf(error / 1000).abs();
-
         int n = 1;
 
-        while (last_term.abs().compareTo(epsilon) > 0) {
+        while (last_term.abs().compareTo(BigDecimal.valueOf(error).abs()) > 0) {
             BigDecimal sign = BigDecimal.valueOf(-1).pow(n);
             BigDecimal numerator = init_val.pow(2 * n + 1);
             BigDecimal denominator = new BigDecimal(Util.fact(2 * n + 1));
@@ -25,5 +29,16 @@ public class Sin {
         }
 
         return actual.doubleValue();
+    }
+
+    public void writeCSV(double x, Writer out, double error) {
+        double res = sin(x, error);
+        double tanArg = -Math.abs(x - Math.PI * Math.floor((x + Math.PI/2) / Math.PI));
+        try {
+            CSVPrinter printer = CSVFormat.DEFAULT.print(out);
+            printer.printRecord(x, res, sin(Math.PI/2 + x, error), sin(tanArg, error), sin(Math.PI/2 + tanArg, error));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
