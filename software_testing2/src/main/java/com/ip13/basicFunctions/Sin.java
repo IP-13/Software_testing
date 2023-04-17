@@ -33,10 +33,9 @@ public class Sin {
 
     public void writeCSV(double x, Writer out, double error) {
         double res = sin(x, error);
-        double tanArg = -Math.abs(x - Math.PI * Math.floor((x + Math.PI/2) / Math.PI));
         try {
             CSVPrinter printer = CSVFormat.DEFAULT.print(out);
-            printer.printRecord(x, res, sin(Math.PI/2 + x, error), sin(tanArg, error), sin(Math.PI/2 + tanArg, error));
+            printer.printRecord(x, res);
         } catch (IOException e) {
             e.printStackTrace();
         }

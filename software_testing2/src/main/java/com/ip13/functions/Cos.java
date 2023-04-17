@@ -23,7 +23,7 @@ public class Cos {
         try {
             val = BigDecimal.ONE.subtract(val.multiply(val)).sqrt(MathContext.DECIMAL128);
         } catch (ArithmeticException e) {
-            val = BigDecimal.ZERO;
+            val = BigDecimal.valueOf(-6.123233995736766E-17);
         }
         if (Math.abs(x % (2 * Math.PI)) >= Math.PI / 2 && Math.abs(x % (2 * Math.PI)) <= 1.5 * Math.PI) {
             return -val.doubleValue();

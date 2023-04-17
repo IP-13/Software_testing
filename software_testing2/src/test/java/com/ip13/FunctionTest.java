@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static java.lang.Double.NaN;
+import static java.lang.Double.POSITIVE_INFINITY;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FunctionTest {
@@ -36,7 +36,7 @@ public class FunctionTest {
     @ParameterizedTest
     @ValueSource(doubles = {-4 * Math.PI, -7 * Math.PI / 2, -3 * Math.PI, -2 * Math.PI, -3 * Math.PI / 2, -Math.PI})
     public void illegalArgTest(double x) {
-        assertEquals(func.solveSystem(x, error), NaN, error);
+        assertEquals(func.solveSystem(x, error), POSITIVE_INFINITY, error);
     }
 
     @Test

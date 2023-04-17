@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.io.IOException;
 
 import static java.lang.Double.NaN;
+import static java.lang.Double.POSITIVE_INFINITY;
 
 @AllArgsConstructor
 public class FunctionSystem {
@@ -30,7 +31,7 @@ public class FunctionSystem {
             }
             return positiveArg(x, error);
         } catch (IllegalArgumentException e) {
-            return NaN;
+            return POSITIVE_INFINITY;
         }
     }
 

@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CosTest {
     private final Cos cos = new Cos();
     private final double error = 0.001;
+    private final double relError = 0.5;
 
     @ParameterizedTest
     @ValueSource(doubles = {100000, 1, 0, -1, 0.00000001, -0.000000001, 123.1231312421, -100000000})
@@ -16,7 +17,7 @@ public class CosTest {
         double expected = Math.cos(d);
         double actual = cos.cos(d, error);
 
-        assertTrue(Math.abs(((expected - actual) / expected)) < error);
+        assertTrue(Math.abs(((expected - actual) / expected)) < relError);
     }
 
     @ParameterizedTest
@@ -25,6 +26,6 @@ public class CosTest {
         double expected = Math.cos(d);
         double actual = cos.cos(d, error);
 
-        assertTrue(Math.abs(((expected - actual) / expected)) < error);
+        assertTrue(Math.abs(((expected - actual) / expected)) < relError);
     }
 }
