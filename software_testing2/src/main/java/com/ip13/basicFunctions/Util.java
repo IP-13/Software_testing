@@ -1,4 +1,4 @@
-package com.ip13.basicFucntions;
+package com.ip13.basicFunctions;
 
 import java.math.BigInteger;
 
