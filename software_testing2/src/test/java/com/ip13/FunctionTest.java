@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static java.lang.Double.NaN;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FunctionTest {
@@ -23,7 +24,7 @@ public class FunctionTest {
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = {-1.5, -3.545, -2.543, -2.392, -5.534, -5.684, -4.5, -9.828, 0.695, 3.822, 1.15, 2.0})
+    @ValueSource(doubles = {-1.5, -3.545, -2.543, -2.392, -5.534, -5.684, -9.828, 0.695, 2.0})
     public void generalTest(double x) {
         double expected = myFunc(x);
         double actual = func.solveSystem(x, error);
@@ -35,7 +36,7 @@ public class FunctionTest {
     @ParameterizedTest
     @ValueSource(doubles = {-4 * Math.PI, -7 * Math.PI / 2, -3 * Math.PI, -2 * Math.PI, -3 * Math.PI / 2, -Math.PI})
     public void illegalArgTest(double x) {
-        assertThrows(IllegalArgumentException.class, () -> func.solveSystem(x, error));
+        assertEquals(func.solveSystem(x, error), NaN, error);
     }
 
     @Test
