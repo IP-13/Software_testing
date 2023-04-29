@@ -36,8 +36,8 @@ public class CsvWriter {
         }
     }
 
-    private static final String dirPathIn = "/home/vsevolod/IdeaProjects/Software_testing/software_testing2/src/main/resources/com/ip13/CSVFiles/input/";
-    private static final String dirPathOut = "/home/vsevolod/IdeaProjects/Software_testing/software_testing2/src/main/resources/com/ip13/CSVFiles/output/";
+    private static final String dirPathIn = "/home/ivan/IdeaProjects/Software_testing/software_testing2/src/main/resources/com/ip13/CSVFiles/input/";
+    private static final String dirPathOut = "/home/ivan/IdeaProjects/Software_testing/software_testing2/src/main/resources/com/ip13/CSVFiles/output/";
     private static final Map<Class<?>, Consumer<State<?>>> procedures = new HashMap<>();
 
     static {
