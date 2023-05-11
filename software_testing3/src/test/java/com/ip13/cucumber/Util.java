@@ -15,9 +15,20 @@ import java.util.Properties;
 public class Util {
     private static WebDriver chromeDriver;
 
-    private static final int millis = 1000;
+    private static final int millis = 300;
 
     public static void timeout() {
+        if (millis == 0) {
+            return;
+        }
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ex) {
+            System.out.println("Exception is caught");
+        }
+    }
+
+    public static void timeout(int millis) {
         if (millis == 0) {
             return;
         }
