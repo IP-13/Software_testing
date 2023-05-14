@@ -1,4 +1,3 @@
 .idea
 target
-src/test/resources/passwords.properties
-src/test/java/drivers
+src/test/resources
