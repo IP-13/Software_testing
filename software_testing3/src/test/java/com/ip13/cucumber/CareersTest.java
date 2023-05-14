@@ -1,41 +1,69 @@
 package com.ip13.cucumber;
 
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import static org.junit.Assert.assertEquals;
+import java.util.List;
+
 
 public class CareersTest {
-    private final WebDriver chromeDriver = Util.getChromeDriver();
+    private static List<WebDriver> drivers;
+
+    
+    @BeforeAll
+    public static void init() {
+        Util.setupDrivers();
+        drivers = Util.initDrivers();
+    }
 
 
-    @Given("I open fandom to check careers")
-    public void i_open_fandom() {
-        chromeDriver.get("https://www.fandom.com/");
+    @Test
+    public void testFindCareer() {
+        openFandomToFindCareer();
+        clickCareerLinkInTheFooterOfThePage();
+        enterSomethingInSearchPositionField();
+        assertNoResultsFound();
+    }
+
+
+    @AfterAll
+    public static void close() {
+        Util.closeDrivers(drivers);
+    }
+
+
+    public void openFandomToFindCareer() {
+        Util.openFandom(drivers);
         Util.timeout();
     }
 
 
-    @And("I click careers link in the footer of the main page")
-    public void i_click_careers_link_in_the_footer_of_the_main_page() {
-        chromeDriver.findElement(By.xpath("/html//footer/div[@class='wds-global-footer__main']/div[2]/section/ul[@class='wds-global-footer__links-list']//a[@href='https://www.fandom.com/careers']")).click();
+    public void clickCareerLinkInTheFooterOfThePage() {
+        String xpath = "/html/body/footer/div[1]/div[2]/section/ul/li[3]/a";
+        drivers.parallelStream().forEach(driver -> Util.findElement(driver, By.xpath(xpath)).click());
         Util.timeout();
     }
 
 
-    @And("I enter something in search open positions field")
-    public void i_enter_in_search_open_positions_field() {
-        chromeDriver.findElement(By.xpath("//*[@id=\"search-input\"]")).sendKeys("It won't be recognized");
+    public void enterSomethingInSearchPositionField() {
+        String xpath = "//*[@id=\"search-input\"]";
+        drivers.parallelStream().forEach(driver -> Util.findElement(driver, By.xpath(xpath)).sendKeys("This search will show no results"));
         Util.timeout();
     }
 
-    @Then("I should see no results found")
-    public void i_should_see() {
-        String result = chromeDriver.findElement(By.xpath("//*[@id=\"search-none\"]")).getText();
-        assertEquals(result, "No results found");
+
+    public void assertNoResultsFound() {
+        String xpath = "//*[@id=\"search-none\"]";
+        drivers.parallelStream().forEach(driver ->
+                {
+                    String result = Util.findElement(driver, By.xpath("//*[@id=\"search-none\"]")).getText();
+                    Assertions.assertEquals(result, "No results found");
+                }
+        );
         Util.timeout();
     }
 }

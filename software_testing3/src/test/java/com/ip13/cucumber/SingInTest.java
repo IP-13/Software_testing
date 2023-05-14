@@ -1,70 +1,99 @@
 package com.ip13.cucumber;
 
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
-import static org.junit.Assert.assertEquals;
+import java.util.List;
 
 
 public class SingInTest {
-    private final WebDriver chromeDriver = Util.getChromeDriver();
+    private static List<WebDriver> drivers;
     private final String username = Util.getUsername();
     private final String password = Util.getPassword();
 
 
-    @Given("I open fandom to sign in")
-    public void i_open_fandom() {
-        chromeDriver.get("https://www.fandom.com/");
+    @BeforeAll
+    public static void init() {
+        Util.setupDrivers();
+        drivers = Util.initDrivers();
+    }
+
+
+    @Test
+    public void testSignIn() {
+        openFandomToSignIn();
+        clickSignInOnTheMainPage();
+        enterUsername();
+        enterPassword();
+        clickSignInButton();
+        goToProfile();
+        checkUsernameInProfile();
+    }
+
+
+    @AfterAll
+    public static void close() {
+        Util.closeDrivers(drivers);
+    }
+
+
+    public void openFandomToSignIn() {
+        Util.openFandom(drivers);
         Util.timeout();
     }
 
 
-    @And("I click sign in on the main page")
-    public void i_click_sign_in_on_the_main_page() {
-        chromeDriver.findElement(By.xpath("/html/body//div[@class='feed-header']//a[@href='https://auth.fandom.com/signin?source=mw']")).click();
+    public void clickSignInOnTheMainPage() {
+        String xpath = "/html/body/div[5]/div[1]/div[1]/div/a[1]";
+        drivers.parallelStream().forEach(driver -> Util.findElement(driver, By.xpath(xpath)).click());
         Util.timeout();
     }
 
 
-    @And("I enter username")
-    public void iEnterUsername() {
-        chromeDriver.findElement(By.xpath("/html/body/div/main/div/div/div/form/section/div/div/input[@id='identifier']")).sendKeys(username);
+    public void enterUsername() {
+        String xpath = "//*[@id=\"identifier\"]";
+        drivers.parallelStream().forEach(driver -> Util.findElement(driver, By.xpath(xpath)).sendKeys(username));
         Util.timeout();
     }
 
 
-    @And("I enter password")
-    public void iEnterPassword() {
-        chromeDriver.findElement(By.xpath("/html/body/div/main/div/div/div/form/section/div/div/div/input[@id='password']")).sendKeys(password);
+    public void enterPassword() {
+        String xpath = "//*[@id=\"password\"]";
+        drivers.parallelStream().forEach(driver -> Util.findElement(driver, By.xpath(xpath)).sendKeys(password));
         Util.timeout();
     }
 
 
-    @And("I click sign in button")
-    public void iClickSignInButton() {
-        chromeDriver.findElement(By.xpath("/html//div[@id='__next']//div[@class='login_formWrapper__IMoai']/form[1]/section/div[@class='Submit_buttonWrapper__33HZ0']")).click();
+    public void clickSignInButton() {
+        String xpath = "/html/body/div[1]/main/div/div[2]/div/form[1]/section/div[3]/button";
+        drivers.parallelStream().forEach(driver -> Util.findElement(driver, By.xpath(xpath)).click());
         Util.timeout();
     }
 
 
-    @And("I go to profile")
     public void goToProfile() {
-        String xpath = "/html/body/div[@class='global-navigation logged-in']/div[@class='global-navigation__bottom']/div/div[@class='wds-dropdown__content']/ul//a[@href='http://community.fandom.com/wiki/User:Softwate-testing3']";
-        new WebDriverWait(chromeDriver, Duration.ofSeconds(30)).until(ExpectedConditions.elementToBeClickable(By.xpath(xpath))).click();
+        String xpathHover = "/html/body/div[2]/div[2]/div/div[1]/div";
+        String xpath = "/html/body/div[2]/div[2]/div/div[2]/ul/li[1]/a";
+
+        drivers.parallelStream().forEach(driver ->
+        {
+            Util.findElement(driver, By.xpath(xpathHover)).click();
+            Util.findElement(driver, By.xpath(xpath)).click();
+        });
         Util.timeout();
     }
 
 
-    @Then("I should see my name")
     public void checkUsernameInProfile() {
-        assertEquals(chromeDriver.findElement(By.xpath("/html//div[@id='userProfileApp']//section[@class='user-identity-box']//h1[.='Softwate-testing3']")).getText(), username);
+        String xpath = "//*[@id=\"userProfileApp\"]/div/section/div[2]/div/div[1]/h1";
+        drivers.parallelStream().forEach(driver -> {
+            String actualUsername = Util.findElement(driver, By.xpath(xpath)).getText();
+            Assertions.assertEquals(username, actualUsername);
+        });
         Util.timeout();
     }
 }
