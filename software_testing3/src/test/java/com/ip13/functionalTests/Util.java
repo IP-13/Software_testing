@@ -25,13 +25,13 @@ public class Util {
     public static void setupDrivers() {
         if (isNull(System.getProperty("webdriver.chrome.driver"))) {
             System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/test/resources/drivers/chromedriver");
-            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/test/resources/drivers/geckodriver");
+            System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "/src/test/resources/drivers/geckodriver");
         }
     }
 
 
     public static List<WebDriver> initDrivers() {
-        try (InputStream input = new FileInputStream("src/test/resources/passwords.properties")) {
+        try (InputStream input = new FileInputStream("src/test/resources/settings.properties")) {
             Properties prop = new Properties();
             prop.load(input);
             String driverName = prop.getProperty("driverName");
@@ -79,7 +79,7 @@ public class Util {
 
 
     public static String getUsername() {
-        try (InputStream input = new FileInputStream("src/test/resources/passwords.properties")) {
+        try (InputStream input = new FileInputStream("src/test/resources/settings.properties")) {
             Properties prop = new Properties();
             prop.load(input);
             return prop.getProperty("username");
@@ -91,7 +91,7 @@ public class Util {
 
 
     public static String getPassword() {
-        try (InputStream input = new FileInputStream("src/test/resources/passwords.properties")) {
+        try (InputStream input = new FileInputStream("src/test/resources/settings.properties")) {
             Properties prop = new Properties();
             prop.load(input);
             return prop.getProperty("password");

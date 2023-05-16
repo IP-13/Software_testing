@@ -64,7 +64,7 @@ public class SearchTest {
         drivers.forEach(driver ->
         {
             String searchResult = Util.findElement(driver, By.xpath(xpath)).getText();
-            Assertions.assertEquals("Search Results for " + request, searchResult);
+            Assertions.assertEquals("Поиск результатов по запросу " + request, searchResult);
         });
     }
 }

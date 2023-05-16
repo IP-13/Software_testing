@@ -24,7 +24,7 @@ public class SupportTest {
         openFandomToWriteToSupport();
         clickSupportLinkInTheFooterOfTheMainPage();
         clickContactUsInTheHeaderOfTheSupportPage();
-        makeSureYouHaveBeenThrownOutOfTheSiteForUsingAutomationTools();
+//        chooseIDontSeeAnOptionForMyIssue();
     }
 
 
@@ -54,9 +54,18 @@ public class SupportTest {
     }
 
 
-    public void makeSureYouHaveBeenThrownOutOfTheSiteForUsingAutomationTools() {
-
-    }
+//    public void chooseIDontSeeAnOptionForMyIssue() {
+//        String xpath1 = "//*[@id=\"new_request\"]/div/a";
+//        String xpath2 = "//*[@id=\"_vur1dzyxh\"]";
+//        drivers.forEach(driver -> Util.findElement(driver, By.xpath(xpath1)).click());
+//        drivers.forEach(driver -> Util.findElement(driver, By.xpath(xpath2)).click());
+//        Util.timeout();
+//    }
+//
+//
+//    public void makeSureYouHaveBeenThrownOutOfTheSiteForUsingAutomationTools() {
+//
+//    }
 }
 
 

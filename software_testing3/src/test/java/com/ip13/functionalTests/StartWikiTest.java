@@ -11,8 +11,6 @@ import java.util.List;
 
 public class StartWikiTest {
     private static List<WebDriver> drivers;
-    private final String username = Util.getUsername();
-    private final String password = Util.getPassword();
     private final String wikiName = "The Real GhostBusters fans2";
     private final String communityDescription = "This is community dedicated to animated tv series \"The Real GhostBusters\", which was translated from 1986 to 1991 and consists of 7 seasons and 140 episodes.";
 
@@ -124,7 +122,7 @@ public class StartWikiTest {
     }
 
 
-    public void assertYouHaveCreateWiki() {
-
-    }
+//    public void assertYouHaveCreatedWiki() {
+//
+//    }
 }
